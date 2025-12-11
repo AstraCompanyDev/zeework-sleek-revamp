@@ -54,9 +54,9 @@ const ClientDashboard = () => {
   const GreetingIcon = getGreetingIcon();
 
   const teamMembers = [
-    { name: "Clarisse K.", role: "Executive Role", avatar: "", initials: "CK", status: "online", lastActive: "Active now" },
-    { name: "Sean W.", role: "Administration Work", avatar: "", initials: "SW", status: "online", lastActive: "Active now" },
-    { name: "Usama I.", role: "Job for Usama", avatar: "", initials: "UI", status: "offline", lastActive: "2h ago" },
+    { name: "Clarisse K.", role: "Executive Role", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", initials: "CK", status: "online", lastActive: "Active now" },
+    { name: "Sean W.", role: "Administration Work", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", initials: "SW", status: "online", lastActive: "Active now" },
+    { name: "Usama I.", role: "Job for Usama", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face", initials: "UI", status: "offline", lastActive: "2h ago" },
   ];
 
   const offers = [
