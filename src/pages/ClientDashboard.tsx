@@ -213,7 +213,7 @@ const ClientDashboard = () => {
               alt="Team collaboration" 
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/40" />
+            <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/60 to-foreground/30" />
           </div>
           
           {/* Content */}
