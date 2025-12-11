@@ -10,7 +10,9 @@ import {
   Bell,
   ChevronLeft,
   ChevronRight,
+  Sun,
   Moon,
+  Sunset,
   CreditCard,
   Briefcase,
   Users,
@@ -18,7 +20,12 @@ import {
   UserCheck,
   ChevronDown,
   Menu,
+  MessageCircle,
+  Clock,
+  ExternalLink,
+  Check,
 } from "lucide-react";
+import dashboardBanner from "@/assets/dashboard-banner.jpg";
 
 const ClientDashboard = () => {
   const [activeTab, setActiveTab] = useState("all");
@@ -37,10 +44,19 @@ const ClientDashboard = () => {
     return "Good Evening";
   };
 
+  const getGreetingIcon = () => {
+    const hour = currentDate.getHours();
+    if (hour < 12) return Sun;
+    if (hour < 18) return Sunset;
+    return Moon;
+  };
+
+  const GreetingIcon = getGreetingIcon();
+
   const teamMembers = [
-    { name: "Clarisse K.", role: "Executive Role", avatar: "", initials: "CK" },
-    { name: "Sean W.", role: "Administration Work", avatar: "", initials: "SW" },
-    { name: "Usama I.", role: "Job for Usama", avatar: "", initials: "UI" },
+    { name: "Clarisse K.", role: "Executive Role", avatar: "", initials: "CK", status: "online", lastActive: "Active now" },
+    { name: "Sean W.", role: "Administration Work", avatar: "", initials: "SW", status: "online", lastActive: "Active now" },
+    { name: "Usama I.", role: "Job for Usama", avatar: "", initials: "UI", status: "offline", lastActive: "2h ago" },
   ];
 
   const offers = [
@@ -189,21 +205,31 @@ const ClientDashboard = () => {
         <h1 className="text-2xl font-bold text-foreground mb-6">Your Dashboard</h1>
 
         {/* Greeting Banner */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-primary/80 p-6 mb-8">
-          <div className="relative z-10">
-            <Badge variant="secondary" className="bg-background/20 text-primary-foreground border-0 mb-2">
+        <div className="relative overflow-hidden rounded-2xl mb-8 h-48 md:h-56">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img 
+              src={dashboardBanner} 
+              alt="Team collaboration" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/40" />
+          </div>
+          
+          {/* Content */}
+          <div className="relative z-10 h-full flex flex-col justify-center p-8">
+            <Badge variant="secondary" className="bg-background/20 text-primary-foreground border-0 mb-3 w-fit backdrop-blur-sm">
               {formattedDate}
             </Badge>
-            <div className="flex items-center gap-2 text-primary-foreground">
-              <Moon className="h-5 w-5" />
-              <h2 className="text-xl font-semibold">{getGreeting()}, Sean</h2>
+            <div className="flex items-center gap-3 text-primary-foreground">
+              <div className="h-10 w-10 rounded-full bg-background/20 backdrop-blur-sm flex items-center justify-center">
+                <GreetingIcon className="h-5 w-5" />
+              </div>
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold">{getGreeting()}, Sean</h2>
+                <p className="text-primary-foreground/80 text-sm">Ready to find your next great hire?</p>
+              </div>
             </div>
-          </div>
-          {/* Decorative elements */}
-          <div className="absolute right-0 top-0 h-full w-1/2 opacity-20">
-            <div className="absolute right-10 top-4 h-20 w-32 bg-background/30 rounded-lg transform rotate-12" />
-            <div className="absolute right-24 top-8 h-16 w-24 bg-background/20 rounded-lg transform -rotate-6" />
-            <div className="absolute right-4 bottom-4 h-12 w-20 bg-background/25 rounded-lg transform rotate-3" />
           </div>
         </div>
 
@@ -212,31 +238,48 @@ const ClientDashboard = () => {
           <div className="lg:col-span-2 space-y-8">
             {/* Your Team Section */}
             <section>
-              <h3 className="text-lg font-semibold text-foreground mb-4">Your Team</h3>
-              <div className="flex items-center gap-4">
-                <Button variant="ghost" size="icon" className="shrink-0">
-                  <ChevronLeft className="h-5 w-5" />
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Your Team</h3>
+                <Button variant="ghost" size="sm" className="text-primary">
+                  View All
+                  <ChevronRight className="h-4 w-4 ml-1" />
                 </Button>
-                <div className="flex gap-4 overflow-x-auto pb-2">
-                  {teamMembers.map((member, index) => (
-                    <Card key={index} className="min-w-[180px] text-center hover:shadow-lg transition-shadow">
-                      <CardContent className="pt-6">
-                        <Avatar className="h-16 w-16 mx-auto mb-3 border-2 border-primary/20">
-                          <AvatarImage src={member.avatar} />
-                          <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                            {member.initials}
-                          </AvatarFallback>
-                        </Avatar>
-                        <h4 className="font-semibold text-foreground">{member.name}</h4>
-                        <p className="text-sm text-muted-foreground mb-4">{member.role}</p>
-                        <Button className="w-full">Message</Button>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-                <Button variant="ghost" size="icon" className="shrink-0">
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {teamMembers.map((member, index) => (
+                  <Card key={index} className="group hover:shadow-lg hover:border-primary/30 transition-all duration-300 overflow-hidden">
+                    <CardContent className="p-5">
+                      <div className="flex items-start gap-4">
+                        <div className="relative">
+                          <Avatar className="h-14 w-14 ring-2 ring-primary/10 group-hover:ring-primary/30 transition-all">
+                            <AvatarImage src={member.avatar} />
+                            <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-semibold text-lg">
+                              {member.initials}
+                            </AvatarFallback>
+                          </Avatar>
+                          <span className={`absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full border-2 border-background ${member.status === 'online' ? 'bg-green-500' : 'bg-muted'}`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-foreground truncate">{member.name}</h4>
+                          <p className="text-sm text-muted-foreground truncate">{member.role}</p>
+                          <div className="flex items-center gap-1 mt-1">
+                            <Clock className="h-3 w-3 text-muted-foreground" />
+                            <span className="text-xs text-muted-foreground">{member.lastActive}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 mt-4">
+                        <Button size="sm" className="flex-1 h-9">
+                          <MessageCircle className="h-4 w-4 mr-1" />
+                          Message
+                        </Button>
+                        <Button size="sm" variant="outline" className="h-9 px-3">
+                          <ExternalLink className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             </section>
 
