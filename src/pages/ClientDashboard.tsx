@@ -66,7 +66,7 @@ const ClientDashboard = () => {
       title: "I will do frontend development for your ..",
       deliveryTime: "Est. 4 days",
       price: "$100",
-      image: "",
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=300&h=200&fit=crop",
     },
     {
       id: 2,
@@ -74,7 +74,7 @@ const ClientDashboard = () => {
       title: "I will deploy your application in AWS wi..",
       deliveryTime: "Est. 7 days",
       price: "$50",
-      image: "",
+      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&h=200&fit=crop",
     },
     {
       id: 3,
@@ -82,7 +82,7 @@ const ClientDashboard = () => {
       title: "I will create a professional Wix Website..",
       deliveryTime: "Est. 5 days",
       price: "$100",
-      image: "",
+      image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=300&h=200&fit=crop",
     },
   ];
 
@@ -299,8 +299,8 @@ const ClientDashboard = () => {
                       {offers.map((offer) => (
                         <Card key={offer.id} className="min-w-[220px] hover:shadow-lg transition-shadow">
                           <CardContent className="p-4">
-                            <div className="h-32 bg-muted rounded-lg mb-3 flex items-center justify-center">
-                              <span className="text-muted-foreground text-sm">gig img</span>
+                            <div className="h-32 rounded-lg mb-3 overflow-hidden">
+                              <img src={offer.image} alt={offer.title} className="w-full h-full object-cover" />
                             </div>
                             <div className="flex items-center gap-2 mb-2">
                               <Avatar className="h-6 w-6">
