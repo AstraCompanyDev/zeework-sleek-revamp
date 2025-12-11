@@ -202,7 +202,6 @@ const ClientDashboard = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-bold text-foreground mb-6">Your Dashboard</h1>
 
         {/* Greeting Banner */}
         <div className="relative overflow-hidden rounded-2xl mb-8 h-48 md:h-56">
